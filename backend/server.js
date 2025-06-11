@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
 import protectedRoutes from './routes/protectedRoutes.js';
+import './config/passport.js';
 
 console.log("Server restarted at", new Date().toLocaleTimeString());
 
