@@ -16,10 +16,11 @@ router.get('/user-only', protect, checkRole('user'), (req, res) => {
 });
 
 router.get('/me', protect, (req, res) => {
-  const { userId, email, role } = req.user;
+  const { id, name, email, role } = req.user;
   res.json({
     user: {
-      id: userId,
+      id: id,
+      name: name,
       email: email,
       role: role
     }
