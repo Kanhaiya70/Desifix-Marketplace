@@ -6,6 +6,9 @@ import authRoutes from './routes/authRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
 import protectedRoutes from './routes/protectedRoutes.js';
 
+console.log("Server restarted at", new Date().toLocaleTimeString());
+
+
 dotenv.config();
 connectDB();
 
