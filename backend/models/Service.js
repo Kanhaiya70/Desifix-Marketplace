@@ -1,10 +1,25 @@
 import mongoose from 'mongoose';
 
 const serviceSchema = new mongoose.Schema({
-  name: String,
-  category: String,
+  title: {
+    type: String,
+    required: true,
+  },
   description: String,
-  price: Number
+  price: {
+    type: Number,
+    required: true,
+  },
+  category: String,
+  location: String,
+  provider: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+}, {
+  timestamps: true,
 });
 
-export default mongoose.model('Service', serviceSchema);
+const Service = mongoose.model('Service', serviceSchema);
+export default Service;

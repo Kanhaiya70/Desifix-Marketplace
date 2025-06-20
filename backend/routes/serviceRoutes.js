@@ -1,16 +1,22 @@
 import express from 'express';
-import Service from '../models/Service.js';
+import {
+  createService,
+  getAllServices,
+  getServiceById,
+  updateService,
+  deleteService,
+} from '../controllers/serviceController.js';
+
+import { protect } from '../middlewares/authMiddleware.js';
+import { isProvider } from '../middlewares/roleMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  try{
-    const services = await Service.find();
-    res.json(services);
-  }
-  catch (err){
-    res.status(500).json({ error: 'Failed to fetch services'});
-  }
-});
+router.get('/', getAllServices);
+router.get('/:id', getServiceById);
+
+router.post('/', protect, isProvider, createService);
+router.put('/:id', protect, isProvider, updateService);
+router.delete('/:id', protect, isProvider, deleteService);
 
 export default router;
