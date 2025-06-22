@@ -16,6 +16,8 @@ const Login = ()=>{
       const { data } = await API.post('/auth/login', formData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
+      console.log("Login response:", data);  // <- add this
+
       navigate('/dashboard');
     } catch(err){
       alert('Login Failed!');

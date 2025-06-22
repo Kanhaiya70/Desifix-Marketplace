@@ -1,13 +1,19 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation(); // tracks route changes
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState('')
 
   // Update login status on route change
   useEffect(() => {
+    const storedRole = localStorage.getItem('role');
+    if (storedRole) setRole(storedRole);
+    console.log("Navbar role:", storedRole);
+
+
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, [location]);
@@ -37,6 +43,13 @@ const Navbar = () => {
                 <li className="nav-item">
                   <Link className="nav-link" to="/dashboard">Dashboard</Link>
                 </li>
+
+                {role === 'provider' && (
+                  <li className="nav-item">
+                    <NavLink className='nav-link' to='/provider-dashboard'>Provider Dashboard</NavLink>
+                  </li>
+                )}
+
                 <li className="nav-item">
                   <button className="btn btn-outline-light ms-3" onClick={handleLogout}>
                     Logout
