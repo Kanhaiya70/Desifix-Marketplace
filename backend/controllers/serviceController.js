@@ -24,9 +24,16 @@ export const createService = async(req, res) =>{
 
 export const getAllServices = async(req, res) =>{
   try{
-    const services = await Service.find().populate('provider', 'name email');
-    res.json(services);
+    const { category, location } = req.query;
+
+    const filter = {};
+    if (category) filter.category = { $regex: new RegExp(category, 'i') };
+    if (location) filter.location = { $regex: new RegExp(location, 'i') };
+
+    const services = await Service.find(filter).populate('provider', 'name email');
+    res.status(200).json(services);
   } catch (err) {
+    console.log('Error fetching services:', err);
     res.status(500).json({ message: 'Server error while fetching services' });
   }
 };
@@ -62,21 +69,6 @@ export const updateService = async(req, res) =>{
   }
 };
 
-// export const deleteService = async(req, res) =>{
-//   try{
-//     const service = await Service.findById(req.params.id);
-//     if(!service) return res.status(404).json({ message: 'Service not found' });
-
-//     if(service.provider.toString() !== req.user.id) {
-//       return res.status(403).json({ message: 'Unauthorized to delete this service' });
-//     }
-
-//     await service.remove();
-//     res.json({ message: 'Service deleted successfully' });
-//   } catch (err) {
-//     res.status(500).json({ message: 'Server error while deleting service' });
-//   }
-// };
 export const deleteService = async (req, res) => {
   try {
     const serviceId = req.params.id;
@@ -102,5 +94,18 @@ export const deleteService = async (req, res) => {
   } catch (err) {
     console.error("Error deleting service:", err);
     res.status(500).json({ message: 'Server error while deleting service' });
+  }
+};
+
+export const getMyServices = async (req, res) => {
+  try {
+    console.log("🔐 getMyServices route HIT");
+    console.log("REQ.USER:", req.user);
+
+    const services = await Service.find({ provider: req.user._id });
+    res.json(services);
+  } catch (err) {
+    console.log('Error fetching provider services:', err);
+    res.status(500).json({ message: 'Server error while fetching services'});
   }
 };
