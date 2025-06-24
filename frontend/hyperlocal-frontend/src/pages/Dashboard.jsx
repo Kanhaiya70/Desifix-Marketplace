@@ -23,10 +23,21 @@ const Dashboard = ()=>{
 
   if (!user) return <p>Loading.....</p>;
 
-  return(
-    <div>
-      <h2>Welcome, { user.name }!</h2>
-      <p>Your role: <strong>{ user.role }</strong></p>
+return (
+    <div className="container mt-5">
+      <div className="card p-5 shadow-sm">
+        <h2 className="mb-3">Welcome, <strong>{user.name}</strong>!</h2>
+        <p className="lead">Your role: <span className="badge bg-primary text-uppercase">{user.role}</span></p>
+
+        <hr />
+        <div className="mt-4">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/my-bookings">📋 View My Bookings</a></li>
+            {user.role === 'provider' && <li><a href="/provider-dashboard">🛠 Go to Provider Dashboard</a></li>}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

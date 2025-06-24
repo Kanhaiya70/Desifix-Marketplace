@@ -1,11 +1,14 @@
 import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { jwtDecode } from 'jwt-decode';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation(); // tracks route changes
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState('')
+
+  
 
   // Update login status on route change
   useEffect(() => {
@@ -16,6 +19,19 @@ const Navbar = () => {
 
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
+
+    if(token) {
+      try {
+        const decoded = jwtDecode(token);
+        setRole(decoded.role);
+        console.log('Navbar role:', decoded.role);
+      } catch (err) {
+        console.error('Failed to decode token:', err);
+        setRole('');
+      }
+    } else {
+      setRole('');
+    }
   }, [location]);
 
   const handleLogout = () => {

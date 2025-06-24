@@ -24,38 +24,43 @@ const Login = ()=>{
     }
   };
 
-  return(
-    <div className="row justify-content-center mt-5">
-      <div className="col-md-6">
-        <div className="card shadow p-4">
-          <h3 className="text-center mb-4">Login</h3>
+return (
+    <div className="container-fluid d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+      <div className="col-md-5">
+        <div className="card p-5 shadow-sm border-0">
+          <h2 className="text-center mb-4">Login to Your Account</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label>Email</label>
+              <label className="form-label">Email address</label>
               <input
                 type="email"
                 name="email"
-                className="form-control"
+                className="form-control form-control-lg"
                 value={email}
                 onChange={handleChange}
+                placeholder="you@example.com"
                 required
               />
             </div>
-            <div className="mb-3">
-              <label>Password</label>
+            <div className="mb-4">
+              <label className="form-label">Password</label>
               <input
                 type="password"
                 name="password"
-                className="form-control"
+                className="form-control form-control-lg"
                 value={password}
                 onChange={handleChange}
+                placeholder="••••••••"
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-100">
+            <button type="submit" className="btn btn-primary w-100 py-2">
               Login
             </button>
           </form>
+          <p className="text-center mt-3 text-muted">
+            Don’t have an account? <a href="/register">Register</a>
+          </p>
         </div>
       </div>
     </div>

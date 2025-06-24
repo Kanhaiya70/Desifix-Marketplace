@@ -20,50 +20,53 @@ const Register = ()=>{
     }
   };
 
-  return (
-    <div className="row justify-content-center mt-5">
+return (
+    <div className="container-fluid d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
       <div className="col-md-6">
-        <div className="card shadow p-4">
-          <h3 className="text-center mb-4">Register</h3>
+        <div className="card p-5 shadow-sm border-0">
+          <h2 className="text-center mb-4">Create Your Account</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label>Name</label>
+              <label className="form-label">Full Name</label>
               <input
                 name="name"
                 type="text"
-                className="form-control"
+                className="form-control form-control-lg"
                 value={name}
                 onChange={handleChange}
+                placeholder="Kanhaiya Agarwal"
                 required
               />
             </div>
             <div className="mb-3">
-              <label>Email</label>
+              <label className="form-label">Email Address</label>
               <input
                 name="email"
                 type="email"
-                className="form-control"
+                className="form-control form-control-lg"
                 value={email}
                 onChange={handleChange}
+                placeholder="you@example.com"
                 required
               />
             </div>
             <div className="mb-3">
-              <label>Password</label>
+              <label className="form-label">Password</label>
               <input
                 name="password"
                 type="password"
-                className="form-control"
+                className="form-control form-control-lg"
                 value={password}
                 onChange={handleChange}
+                placeholder="Create a strong password"
                 required
               />
             </div>
-            <div className="mb-3">
-              <label>Register as</label>
+            <div className="mb-4">
+              <label className="form-label">Register As</label>
               <select
                 name="role"
-                className="form-select"
+                className="form-select form-select-lg"
                 value={role}
                 onChange={handleChange}
               >
@@ -72,10 +75,13 @@ const Register = ()=>{
                 <option value="admin">Admin</option>
               </select>
             </div>
-            <button type="submit" className="btn btn-success w-100">
+            <button type="submit" className="btn btn-success w-100 py-2">
               Register
             </button>
           </form>
+          <p className="text-center mt-3 text-muted">
+            Already have an account? <a href="/login">Login</a>
+          </p>
         </div>
       </div>
     </div>
