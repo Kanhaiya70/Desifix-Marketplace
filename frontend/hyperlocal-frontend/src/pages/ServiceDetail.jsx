@@ -10,6 +10,12 @@ const ServiceDetail = () => {
   const [service, setService] = useState(null);
   const [date, setDate] = useState(null);
   const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState('');
+
+  const [role, setRole] = useState('');
+  const [hasBooked, setHasBooked] = useState(true);
 
   useEffect(() => {
     const fetchService = async () => {
@@ -20,15 +26,33 @@ const ServiceDetail = () => {
         console.log('Failed to load service details', err);
       }
     };
-    fetchService();
-  }, [id]);
 
-  const token = localStorage.getItem('token');
-  let role = null;
-  if(token) {
-    const decoded = jwtDecode(token);
-    role = decoded.role;
-  }
+    const fetchReviews = async () => {
+      try {
+        const { data } = await API.get(`/reviews/${id}`);
+        setReviews(data);
+      } catch (err) {
+        console.error('Failed to fetch reviews', err);
+      }
+    };
+
+    const decodeRole = () => {
+      const token = localStorage.getItem('token');
+      // let role = null;
+      if(token) {
+        try {
+          const decoded = jwtDecode(token);
+          setRole(decoded.role);
+        } catch (err) {
+          console.error('JWT decode failed');
+        }
+      }
+    };
+
+    fetchService();
+    fetchReviews();
+    decodeRole();
+  }, [id]);
 
   const handleBooking = async () => {
     const token = localStorage.getItem('token');
@@ -56,14 +80,63 @@ const ServiceDetail = () => {
           },
         }
       );
-      
-
       toast.success('Booking successful!');
       setTimeout(() => navigate('/dashboard'), 2000);
     } catch (err) {
       console.log('Booking failed!', err);
       toast.error("Booking failed!");
     }
+  };
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem('token');
+      await API.post('/reviews', {
+        serviceId: id,
+        rating,
+        comment,
+      }, {
+        headers: { Authorization: `Bearer ${token}`},
+      });
+
+      toast.success('Review submitted!');
+      setComment('');
+      setRating(5);
+      const { data } = await API.get(`/reviews/${id}`);
+      setReviews(data);
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to submit review');
+    }
+  };
+
+  const handlePayment = async () => {
+    const razorpayKey = "RAZORPAY_KEY__HERE";
+
+    const options = {
+      key: razorpayKey,
+      amount: service.price * 100,
+      currency: "INR",
+      name: "Desifix",
+      description: `Booking for ${service.title}`,
+      image: "",
+      handler: function (response) {
+        toast.success("Payment successful!");
+        console.log("💰 Razorpay Payment ID:", response.razorpay_payment_id);
+      },
+      prefill: {
+        name: "User Name",
+        email: "user@example.com",
+        contact: "999999999",
+      },
+      theme: {
+        color: "#1976d2",
+      },
+    };
+
+    const rzp = new window.Razopay(options);
+    rzp.open();
   };
 
   if(!service)
@@ -103,14 +176,53 @@ return (
           </div>
           <div className="col-md-6 mt-3 mt-md-0 d-grid">
             {role === "user" ? (
-            <button className="btn btn-primary" onClick={handleBooking}>
-              Book Now
+            <button className="btn btn-primary" onClick={handleBooking}>    /*replace with handlePayment*/
+              Pay & Book Now
             </button>
           ) : (
             <p className="text-danger mt-3">
               🔒 Only users can book services. Providers cannot make bookings.
             </p>
           )}
+
+          <hr className='my-4' />
+          <h4>⭐ Reviews</h4>
+          { reviews.length === 0 && <p>No reviews yet.</p>}
+
+          { reviews.map((r) => (
+            <div key={r._id} className='mb-3 border-bottom pb-2'>
+              <strong>{r.user?.name}</strong>{" "}
+              <span className='text-warning'>{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
+              <p className="mb-0">{r.comment}</p>
+                <small className="text-muted">
+                  {new Date(r.createdAt).toLocaleDateString("en-IN", {
+                    day: "numeric", month: "short", year: "numeric"
+                  })}
+                </small>
+            </div>
+          ))}
+
+          {/* Review form for logged in users */}
+            {role === "user" && hasBooked && (
+              <form className="mt-4" onSubmit={handleSubmitReview}>
+                <h5>Leave a Review</h5>
+                <label>Rating</label>
+                <select className="form-select mb-2" value={rating} onChange={(e) => setRating(e.target.value)}>
+                  {[5, 4, 3, 2, 1].map((r) => (
+                    <option key={r} value={r}>{r} - {["Terrible", "Poor", "Okay", "Good", "Excellent"][5 - r]}</option>
+                  ))}
+                </select>
+
+                <textarea
+                  className="form-control mb-2"
+                  placeholder="Share your experience"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+
+                <button className="btn btn-success">Submit Review</button>
+              </form>
+            )}
           </div>
         </div>
       </div>
