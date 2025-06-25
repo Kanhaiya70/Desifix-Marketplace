@@ -6,6 +6,10 @@ const serviceSchema = new mongoose.Schema({
     required: true,
   },
   description: String,
+  image: {
+    type: String,
+    required: true,
+  },
   price: {
     type: Number,
     required: true,

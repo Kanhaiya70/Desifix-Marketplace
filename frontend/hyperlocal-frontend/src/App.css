@@ -43,6 +43,7 @@
 body {
   background-color: #f8f9fa;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
+  padding-top: 70px
 }
 
 h1, h2, h3, h4, h5 {
@@ -53,4 +54,86 @@ h1, h2, h3, h4, h5 {
   transform: translateY(-4px);
   transform: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* move to top css*/
+.hover-zoom:hover {
+  transform: scale(1.05);
+}
+
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+  width: 45px;
+  height: 45px;
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease-in-out;
+}
+
+.scroll-to-top-btn.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-to-top-btn:hover {
+  animation: pulse 0.8s;
+}
+
+/* Bounce or pulse effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.custom-glass {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent black */
+  transition: background-color 0.3s ease;
+}
+
+.custom-glass .nav-link,
+.custom-glass .navbar-brand {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.custom-glass .navbar-nav .nav-link {
+  color: gray !important;
+}
+
+.custom-glass .navbar-brand {
+  color: gray !important;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: gray;
+}
+
+
+
+
+
+.modal-backdrop.show {
+  z-index: 1050;
+}
+.modal.show {
+  z-index: 1060;
+}
+
+
+body.modal-open {
+  overflow: hidden;
+  padding-right: 0 !important;
 }

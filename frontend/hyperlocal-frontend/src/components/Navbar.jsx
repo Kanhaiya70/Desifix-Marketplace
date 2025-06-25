@@ -41,7 +41,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+    // <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow">
+    <nav className="navbar navbar-expand-lg bg-transparent navbar-dark fixed-top shadow custom-glass">
       <div className="container">
         <Link className="navbar-brand" to="/">Hyperlocal Services</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
@@ -66,8 +67,8 @@ const Navbar = () => {
                   </li>
                 )}
 
-                <li className="nav-item">
-                  <button className="btn btn-outline-light ms-3" onClick={handleLogout}>
+                <li className="nav-item " >
+                  <button style={{ color: "gray"}} className="btn btn-outline-light ms-2 " onClick={handleLogout}>
                     Logout
                   </button>
                 </li>

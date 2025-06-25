@@ -33,7 +33,7 @@ return (
         <div className="mt-4">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="/my-bookings">📋 View My Bookings</a></li>
+            {user.role === 'user' && <li><a href="/my-bookings">📋 View My Bookings</a></li>}
             {user.role === 'provider' && <li><a href="/provider-dashboard">🛠 Go to Provider Dashboard</a></li>}
           </ul>
         </div>
