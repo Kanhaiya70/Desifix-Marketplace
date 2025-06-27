@@ -1,13 +1,14 @@
 import { Link, useNavigate, useLocation, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation(); // tracks route changes
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState('')
-
+  const [userName, setUserName] = useState("");
   
 
   // Update login status on route change
@@ -24,6 +25,7 @@ const Navbar = () => {
       try {
         const decoded = jwtDecode(token);
         setRole(decoded.role);
+        setUserName(decoded.name);
         console.log('Navbar role:', decoded.role);
       } catch (err) {
         console.error('Failed to decode token:', err);
@@ -37,6 +39,10 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
+    toast.info("Logged out successfully!", {
+      position: "top-right",
+      autoClose: 2000,
+    });
     navigate("/login");
   };
 
@@ -67,11 +73,19 @@ const Navbar = () => {
                   </li>
                 )}
 
-                <li className="nav-item " >
-                  <button style={{ color: "gray"}} className="btn btn-outline-light ms-2 " onClick={handleLogout}>
-                    Logout
-                  </button>
-                </li>
+                <button
+  className="btn btn-outline-danger fw-semibold px-3 ms-2"
+  onClick={handleLogout}
+>
+  🔓 Logout
+</button>
+
+                {userName && (
+                  <li className="nav-item">
+                    <span className="nav-link fw-bold text-primary">👤Hi, {userName}!</span>
+                  </li>
+                )}
+
               </>
             ) : (
               <>

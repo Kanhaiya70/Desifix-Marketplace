@@ -3,14 +3,22 @@ import mongoose from "mongoose";
 
 export const createService = async(req, res) =>{
   try{
-    const { title, description, category, price, location } = req.body;
+    const { title, description, category, price, location, image: imageLink } = req.body;
 
+    const image = req.file
+     ? `/uploads/${req.file.filename}`
+     : imageLink?.startsWith("http")
+     ? imageLink
+     : null;
+
+     
     const newService = new Service({
       title,
       description,
       category,
       price,
       location,
+      image,
       provider: req.user._id,    // from auth middleware
     });
     console.log("req.user:", req.user); // Should print user object

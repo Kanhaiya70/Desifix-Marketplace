@@ -24,7 +24,13 @@ const Register = ()=>{
   return (
     <div
       className="container-fluid d-flex justify-content-center align-items-center bg-light"
-      style={{ minHeight: '100vh' }}
+      style={{ 
+        minHeight: '100vh',
+        backgroundImage: 'url(https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg?semt=ais_items_boosted&w=740)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
       data-aos= "fade-right"
     >
       <div className="col-md-6">

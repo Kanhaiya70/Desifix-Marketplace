@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from '../api/axios';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = ()=>{
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -18,8 +19,11 @@ const Login = ()=>{
       localStorage.setItem('token', data.token);
       localStorage.setItem('role', data.role);
       console.log("Login response:", data);  // <- add this
-
       navigate('/dashboard');
+      toast.success("Logged in successfully!", {
+        position: "top-right",
+        autoClose: 2000,
+      });
     } catch(err){
       alert('Login Failed!');
     }
@@ -27,12 +31,26 @@ const Login = ()=>{
 
   return (
     <div
-      className="container-fluid d-flex justify-content-center align-items-center bg-light"
-      style={{ minHeight: '100vh' }}
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        minHeight: '100vh', 
+        backgroundImage: 'url(https://img.freepik.com/free-photo/grunge-black-concrete-textured-background_53876-124541.jpg?semt=ais_items_boosted&w=740)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
       data-aos= "fade-right"
     >
       <div className="col-md-5">
-        <div className="card shadow-lg border-0 rounded-4 px-4 py-5 bg-white">
+        <div 
+          className="card shadow-lg border-0 rounded-4 px-4 py-5" 
+          style={{ 
+            backgroundColor: "rgba(255,255,255,0.85)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            border: "1px solid rgba(255, 255, 255, 0.3)", 
+          }}
+        >
           <h2 className="text-center mb-4 fw-bold text-primary">Welcome Back</h2>
           <p className="text-center text-muted mb-4">Login to your account</p>
 

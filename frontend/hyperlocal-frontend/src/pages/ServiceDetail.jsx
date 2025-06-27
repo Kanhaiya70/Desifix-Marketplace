@@ -4,7 +4,6 @@ import API from '../api/axios';
 import DatePicker from 'react-datepicker';
 import { toast, ToastContainer } from 'react-toastify';
 import { jwtDecode } from 'jwt-decode';
-import * as bootstrap from 'bootstrap';
 
 const ServiceDetail = () => {
   const { id } = useParams();
@@ -17,6 +16,17 @@ const ServiceDetail = () => {
 
   const [role, setRole] = useState('');
   const [hasBooked, setHasBooked] = useState(true);
+
+  const token = localStorage.getItem("token");
+  if(token) {
+    try{
+      const decoded = jwtDecode(token);
+      let roles = null;
+      roles = decoded.role;
+    } catch (err) {
+      // console.error("Token decode failed");
+    }
+  }
 
   useEffect(() => {
     const fetchService = async () => {
@@ -39,7 +49,6 @@ const ServiceDetail = () => {
 
     const decodeRole = () => {
       const token = localStorage.getItem('token');
-      // let role = null;
       if(token) {
         try {
           const decoded = jwtDecode(token);
@@ -68,11 +77,12 @@ const ServiceDetail = () => {
     }
 
     try {
-      console.log("📤 Booking payload:", { serviceId: id, scheduleDate: date });
-      await API.post(
+      console.log("📤 Booking payload:", { serviceId: service._id, scheduleDate: date });
+
+      const res = await API.post(
         "/bookings",
         {
-          serviceId: id,
+          serviceId: service._id,
           scheduleDate: date,
         },
         {
@@ -81,9 +91,13 @@ const ServiceDetail = () => {
           },
         }
       );
+      const bookingId = res.data._id;
       toast.success('Booking successful!');
-      setTimeout(() => navigate('/dashboard'), 2000);
+      setTimeout(() => { navigate(`/pay/${bookingId}`); }, 1500);
+
     } catch (err) {
+      console.log("📦 Booking response:", res.data);
+
       console.log('Booking failed!', err);
       toast.error("Booking failed!");
     }
@@ -229,10 +243,7 @@ return (
     //   </div>
     // </div>
 
-
-
-
-    <div className="container my-5">
+    <div className="container my-5" data-aos= "flip-left">
       <ToastContainer />
       <div className="card shadow-sm p-4">
         <h2 className="mb-3">{service.title}</h2>
@@ -256,16 +267,22 @@ return (
         <hr className="my-4" />
 
         <div className="row g-3">
-          <div className="col-md-6">
-            <label className="form-label fw-bold">Booking Date</label>
-            <DatePicker
-              selected={date}
-              onChange={(d) => setDate(d)}
-              minDate={new Date()}
-              className="form-control form-control-lg"
-              placeholderText="Choose a date"
-            />
-          </div>
+          {token && role === "user" ? (
+            <div className="col-md-6">
+              <label className="form-label fw-bold">Booking Date</label>
+              <DatePicker
+                selected={date}
+                onChange={(d) => setDate(d)}
+                minDate={new Date()}
+                className="form-control form-control-lg"
+                placeholderText="Choose a date"
+              />
+            </div>
+          ) : !token ? (
+            <div className="col-md-6">
+              <p className="text-muted mt-3">Login as a user to book this service.</p>
+            </div>
+          ) : null}
 
           <div className="col-md-6 d-grid">
             {role === 'user' ? (

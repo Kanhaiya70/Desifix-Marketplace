@@ -80,3 +80,23 @@ export const getProviderBookings = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch provider bookings' });
   }
 };
+
+export const getBookingById = async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id).populate('service');
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    // Optional: restrict to the owner or provider
+    if (booking.user.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
+
+    res.json(booking);
+  } catch (err) {
+    console.error("Get Booking Error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
