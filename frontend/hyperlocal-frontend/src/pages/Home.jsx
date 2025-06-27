@@ -16,12 +16,23 @@ const Home = () =>{
     }
   };
 
+  // useEffect(() => {
+  //   fetchServices();
+  // }, [filters]);
+
   useEffect(() => {
+    const el = document.querySelector("#heroCarousel");
+    if (el) {
+      const carousel = new window.bootstrap.Carousel(el, {
+        interval: 5000,
+        ride: "carousel",
+      });
+    }
     fetchServices();
   }, [filters]);
 
 return (
-    <div className="container-fluid px-4" data-aos= "fade-right">
+    <div className="container-fluid px-4" data-aos= "fade-right" data-aos-delay={100}>
 
       {/* Filters */}
       {/* <div className="row justify-content-center mb-4">
@@ -91,7 +102,7 @@ return (
 
 
       {/* Hero Section */}
-      <div id="heroCarousel" className="carousel slide carousel-fade mb-4" data-bs-ride="carousel">
+      <div id="heroCarousel" className="carousel slide mb-4" data-bs-ride="carousel">
         <div className="carousel-inner rounded shadow overflow-hidden">
 
           {/* Slide 1 */}

@@ -15,7 +15,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
-
+import PaymentPage from './pages/PaymentPage';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 
 function App(){
@@ -31,6 +32,7 @@ function App(){
     <BrowserRouter>
       <div style={{ backgroundColor: '#fdf6ed', minHeight: '100vh' }}>
         <Navbar />
+        <ToastContainer />
         <Layout>
           <Routes>
             <Route path='/' element= {<Home />} />
@@ -40,6 +42,8 @@ function App(){
             <Route path='/services/:id' element= {<ServiceDetail />} />
             <Route path='/my-bookings' element= {<MyBookings /> } />
             <Route path='/provider-dashboard' element= {<ProviderDashboard />} />
+            <Route path='/pay/:bookingId' element= {<PaymentPage />} />
+            <Route path='/payment-success' element= {<PaymentSuccess />} />
           </Routes>
         </Layout>
         <Footer />
