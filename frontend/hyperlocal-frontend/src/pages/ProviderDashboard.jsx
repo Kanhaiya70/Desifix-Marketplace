@@ -3,7 +3,6 @@ import axios from "../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import.meta.env.VITE_BACKEND_URL;
 
 const ProviderDashboard = () => {
   const [services, setServices] = useState([]);

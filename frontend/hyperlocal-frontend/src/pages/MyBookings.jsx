@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import API from '../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
-import.meta.env.VITE_BACKEND_URL
-
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
