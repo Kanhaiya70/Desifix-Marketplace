@@ -32,7 +32,7 @@ const ProviderDashboard = () => {
   const fetchMyServices = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(`/api/services/my-services`, {
+      const { data } = await axios.get(`/services/my-services`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -50,7 +50,7 @@ const ProviderDashboard = () => {
   const fetchProviderBookings = async () => {
   try {
     const token = localStorage.getItem("token");
-    const { data } = await axios.get(`/api/bookings/provider`, {
+    const { data } = await axios.get(`/bookings/provider`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     console.log("📋 Booking:", bookings.scheduleDate);
@@ -70,7 +70,7 @@ const ProviderDashboard = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.patch(
-        `/api/bookings/${bookingId}/status`,
+        `/bookings/${bookingId}/status`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${token}` },
