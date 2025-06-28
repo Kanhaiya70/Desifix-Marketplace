@@ -1,4 +1,10 @@
 backend/.env
 node_modules/
+# frontend/.env.env
+*/.env
+.env-prod
+venv
+=======
 venv
 backend/.env-prod
+
