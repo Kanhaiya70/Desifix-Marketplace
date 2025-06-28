@@ -5,8 +5,8 @@ DesiFix is a full-stack web application (inspired by Urban Company) where **user
 
 ### 🔗 Live Demo
 
-- Frontend: [Netlify Deployment](https://your-netlify-link.netlify.app)  
-- Backend: [Render Deployment](https://your-backend.onrender.com) *(used as API endpoint)*
+- Frontend: [Netlify Deployment](https://desifix-marketplace.netlify.app)  
+- Backend: [Render Deployment](https://desifix-marketplace-backend.onrender.com) *(used as API endpoint)*
 
 ---
 
