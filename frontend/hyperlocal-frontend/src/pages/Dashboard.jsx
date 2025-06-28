@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
 import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -59,16 +60,16 @@ const Dashboard = () => {
             <ul className="list-group list-group-flush">
               {user.role === "user" && (
                 <li className="list-group-item">
-                  <a href="/my-bookings" className="text-decoration-none fw-semibold">
+                  <Link to="/my-bookings" className="text-decoration-none fw-semibold">
                     📋 View My Bookings
-                  </a>
+                  </Link>
                 </li>
               )}
               {user.role === "provider" && (
                 <li className="list-group-item">
-                  <a href="/provider-dashboard" className="text-decoration-none fw-semibold">
+                  <Link to="/provider-dashboard" className="text-decoration-none fw-semibold">
                     🛠 Go to Provider Dashboard
-                  </a>
+                  </Link>
                 </li>
               )}
             </ul>

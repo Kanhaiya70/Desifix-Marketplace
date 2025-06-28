@@ -1,6 +1,7 @@
 import { useState } from "react";
 import API from "../api/axios";
 import  { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Register = ()=>{
   const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'user' });
@@ -135,9 +136,9 @@ const Register = ()=>{
           {/* Link to Login */}
           <p className="text-center mt-4 text-muted small">
             Already have an account?{" "}
-            <a href="/login" className="text-decoration-none text-primary fw-medium">
+            <Link to="/login" className="text-decoration-none text-primary fw-medium">
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>

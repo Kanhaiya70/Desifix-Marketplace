@@ -10,7 +10,7 @@ const MyBookings = () => {
       try {
         const token = localStorage.getItem('token');
         console.log("🔐 Current JWT:", token);
-        const { data } = await API.get('http://localhost:7050/api/bookings/my', {
+        const { data } = await API.get(`/bookings/my`, {
           headers: { Authorization: `Bearer ${token}`}
         });
         setBookings(data);

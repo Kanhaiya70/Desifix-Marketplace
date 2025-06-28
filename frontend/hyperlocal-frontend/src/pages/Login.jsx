@@ -1,6 +1,6 @@
 import { useState } from "react";
 import API from '../api/axios';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = ()=>{
@@ -109,7 +109,7 @@ const Login = ()=>{
 
           {/* Footer */}
           <p className="text-center mt-4 text-muted small">
-            Don’t have an account? <a href="/register" className="text-decoration-none text-primary fw-medium">Register</a>
+            Don’t have an account? <Link to="/register" className="text-decoration-none text-primary fw-medium">Register</Link>
           </p>
         </div>
       </div>
