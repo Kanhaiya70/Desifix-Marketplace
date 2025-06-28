@@ -2,3 +2,5 @@ backend/.env
 node_modules/
 # frontend/.env.env
 */.env
+.env-prod
+venv
